@@ -13,6 +13,19 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'opacity': 'opacity',
+        'transform': 'transform',
+        'visibility': 'visibility',
+        'transition': 'transition',
+      }
+    },
+  },
+  variants: {
+    extend: {
+      transitionProperty: ['responsive', 'motion-safe', 'motion-reduce'],
     },
   },
   plugins: [require('tailwind-clip-path')],
