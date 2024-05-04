@@ -22,15 +22,15 @@ export default function Nav() {
               <b>首页</b>
             </Link>
           </li>
-          <li className="p-2 pt-1 pb-1 flex-grow-[1] flex items-center justify-center">
+          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
             <Link href="/" className="">
               <b>AI导航站</b>
             </Link>
           </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center">
+          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
             <Link href="/" className="flex items-center justify-center flex-1">
               <b>提示词</b>
-              <span className="ml-auto">
+              <span className="mx-8">
                 <Triangle width="9" height="9" className="fill-white" />
               </span>
             </Link>
@@ -46,10 +46,10 @@ export default function Nav() {
               </li>
             </ul>
           </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1] flex items-center justify-center">
+          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
             <Link href="/" className="flex items-center justify-center flex-1">
               <b>AI学院</b>
-              <span className="ml-auto">
+              <span className="mx-8">
                 <Triangle width="9" height="9" className="fill-white" />
               </span>
             </Link>
@@ -68,7 +68,7 @@ export default function Nav() {
               </li>
             </ul>
           </li>
-          <li className="p-2 pt-1 pb-1 flex-grow-[1] flex items-center justify-center">
+          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
             <Link href="/" className="flex items-center justify-center">
               <b>AI提词器</b>
             </Link>
