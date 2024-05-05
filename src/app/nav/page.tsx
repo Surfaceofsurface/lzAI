@@ -1,7 +1,48 @@
+"use client";
 import WeChatSVG from "@/assets/wechat.svg";
 import Locate from "@/assets/locate.svg";
 import AICard from "@/components/aicard";
+import Link from "next/link";
+import { useIntersectionObserver } from "@reactuses/core";
+import { useRef } from "react";
 export default function NavMain() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const observerOption = {
+    root: rootRef.current,
+    rootMargin: "0px",
+    threshold: 1,
+  };
+  const chatRef = useRef<HTMLDivElement>(null);
+  const designRef = useRef<HTMLDivElement>(null);
+  const designStop = useIntersectionObserver(
+    designRef,
+    (entry) => {
+      //判断被观测者的位置
+      const viewPortH = entry[0].rootBounds!.height;
+      const observereeTop = entry[0].intersectionRect.top;
+      //计算被观察者离视口顶端与视口高度的占比
+      const topRatio = observereeTop / viewPortH;
+      console.log(entry);
+
+      if (topRatio > 0.8) return; //从下面出现(或消失)
+      //从上面出现(或消失)
+      if (entry[0].intersectionRatio === 1) {
+        //从上面出现
+        console.log("从上面出现");
+      } else {
+        //从上面消失
+        console.log("从上面消失");
+      }
+    },
+    observerOption
+  );
+  // const designStop = useIntersectionObserver(
+  //   designRef,
+  //   (entry) => {
+  //     console.log(entry);
+  //   },
+  //   observerOption
+  // );
   let navCardsData: {
     title: string;
     cover: React.ReactNode;
@@ -91,19 +132,27 @@ export default function NavMain() {
   ];
   navCardsData = navCardsData.concat(navCardsData);
   return (
-    <main className="flex flex-1 overflow-hidden">
+    <main className="flex flex-1 overflow-hidden" ref={rootRef}>
       <aside className="basis-0 grow-[1]">
         <ul className="flex flex-col p-2 gap-4">
-          <li>AI聊天与助手</li>
-          <li>AI写作与文本</li>
-          <li>AI图像与设计</li>
-          <li>AI音频与视频</li>
+          <li>
+            <Link href="#chat">AI聊天与助手</Link>
+          </li>
+          <li>
+            <Link href="#write">AI写作与文本</Link>
+          </li>
+          <li>
+            <Link href="#design">AI图像与设计</Link>
+          </li>
+          <li>
+            <Link href="#media">AI音频与视频</Link>
+          </li>
         </ul>
       </aside>
-      <main className="basis-0 grow-[9] h-full overflow-y-scroll bg-neutral-900 p-3 text-gray-400">
-        <section>
+      <main className="basis-0 grow-[9] h-full overflow-y-scroll scroll-smooth bg-neutral-900 p-3 text-gray-400">
+        <section id="chat">
           <hgroup className="flex justify-between">
-            <h4 className="flex">
+            <h4 className="flex" ref={chatRef}>
               <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
               <span>AI聊天与助手</span>
             </h4>
@@ -117,15 +166,16 @@ export default function NavMain() {
                   cover={card.cover}
                   describe={card.describe}
                   tags={card.tag}
+                  key={card.title}
                 ></AICard>
               ))}
             </ul>
           </div>
         </section>
 
-        <section className="mt-4">
+        <section className="mt-4" id="design">
           <hgroup className="flex justify-between">
-            <h4 className="flex">
+            <h4 className="flex" ref={designRef}>
               <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
               <span>AI图像与设计</span>
             </h4>
@@ -139,6 +189,7 @@ export default function NavMain() {
                   cover={card.cover}
                   describe={card.describe}
                   tags={card.tag}
+                  key={card.title}
                 ></AICard>
               ))}
             </ul>
