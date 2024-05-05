@@ -9,7 +9,7 @@ export default function Home() {
     <div>
       <div className="bg-[url('/homeAstro.png')] h-screen bg-cover ">
         <Banner></Banner>
-        <Nav></Nav>
+        <Nav highlightIndex={0}></Nav>
       </div>
 
       <main className="p-12 flex flex-col gap-12">

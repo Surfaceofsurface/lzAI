@@ -139,7 +139,7 @@ export default function AITools() {
       <p className="text-2xl font-bold tracking-widest mb-8">
         “AI 工具包尽在这里，一站式导航”
       </p>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 text-xs">
         {aiToolsNavData.map((usageCategory) => (
           <div key={usageCategory.title}>
             <h3 className="text-3xl font-bold tracking-widest mb-4">
@@ -164,7 +164,7 @@ export default function AITools() {
                     <div className="flex gap-1 overflow-hidden">
                       {item.tag.map((t) => (
                         <span
-                          className="shrink-0 bg-neutral-700 text-neutral-400 text-sm rounded-full p-1 pl-2 pr-2"
+                          className="shrink-0 bg-neutral-700 text-neutral-400 rounded-full p-1 pl-2 pr-2"
                           key={t}
                         >
                           {t}

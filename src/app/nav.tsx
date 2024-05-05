@@ -2,7 +2,33 @@ import Image from "next/image";
 import Link from "next/link";
 import Search from "@/assets/search.svg";
 import Triangle from "@/assets/triangle.svg";
-export default function Nav() {
+export default function Nav({ highlightIndex }: { highlightIndex: number }) {
+  const navLinks = [
+    { title: "首页", href: "/" },
+    {
+      title: "AI导航站",
+      href: "/nav",
+    },
+    {
+      title: "提示词",
+      href: "/",
+      subLinks: [
+        { title: "AI写作与文本", href: "/" },
+        { title: "AI图像与设计", href: "/" },
+        { title: "AI音频与视频", href: "/" },
+      ],
+    },
+    {
+      title: "AI学院",
+      href: "/",
+      subLinks: [
+        { title: "chatGPT教程", href: "/" },
+        { title: "Midjourney教程", href: "/" },
+        { title: "stable Diffusion教程", href: "/" },
+        { title: "sora教程", href: "/" },
+      ],
+    },
+  ];
   return (
     <nav className="flex items-center p-10 pt-3 pb-3 bg-black/50 gap-6 md:gap-8 lg:gap-12 ">
       <div className="flex md:flex-col gap-4 md:gap-1 justify-center items-center">
@@ -13,66 +39,43 @@ export default function Nav() {
       </div>
       <main className="flex-grow hidden md:flex">
         <ul className="flex items-stretch justify-center gap-4 w-full">
-          <li
-            className="h-12 p-2 pt-1 pb-1 text-lg  flex items-center justify-center
-              bg-gradient-to-r from-[#0000ff] clip-path-polygon-[15%_0%,0%_100%,85%_100%,100%_0%]
-              flex-grow-[2]"
-          >
-            <Link href="/" className="">
-              <b>首页</b>
-            </Link>
-          </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
-            <Link href="/" className="">
-              <b>AI导航站</b>
-            </Link>
-          </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
-            <Link href="/" className="flex items-center justify-center flex-1">
-              <b>提示词</b>
-              <span className="mx-8">
-                <Triangle width="9" height="9" className="fill-white" />
-              </span>
-            </Link>
-            <ul className="group-hover:flex flex-col gap-2 hidden bg-neutral-900 absolute top-10 text-zinc-50 p-5  ">
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">AI写作与文本</Link>
-              </li>
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">AI图像与设计</Link>
-              </li>
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">AI音频与视频</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
-            <Link href="/" className="flex items-center justify-center flex-1">
-              <b>AI学院</b>
-              <span className="mx-8">
-                <Triangle width="9" height="9" className="fill-white" />
-              </span>
-            </Link>
-            <ul className="group-hover:flex flex-col gap-2 hidden bg-neutral-900 absolute top-10 text-zinc-50 p-5  ">
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">chatGPT教程</Link>
-              </li>
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">Midjourney教程</Link>
-              </li>
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">stable Diffusion教程</Link>
-              </li>
-              <li className="text-nowrap hover:text-orange-400">
-                <Link href="/">sora教程</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out ">
-            <Link href="/" className="flex items-center justify-center">
-              <b>AI提词器</b>
-            </Link>
-          </li>
+          {navLinks.map((link, i) => (
+            <li
+              key={link.title}
+              className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out "
+            >
+              <Link
+                href={link.href}
+                className={`p-2 pt-1 pb-1 flex items-center justify-center ${
+                  i === highlightIndex
+                    ? "h-12 bg-gradient-to-r from-[#0000ff] clip-path-polygon-[15%_0%,0%_100%,85%_100%,100%_0%] text-lg"
+                    : ""
+                }`}
+              >
+                <b className={i === highlightIndex ? "p-3" : ""}>
+                  {link.title}
+                </b>
+                {link.subLinks && (
+                  <span className="mx-8">
+                    <Triangle width="9" height="9" className="fill-white" />
+                  </span>
+                )}
+              </Link>
+              {link.subLinks && (
+                <ul className="group-hover:flex flex-col gap-2 hidden bg-neutral-900 absolute top-10 text-zinc-50 p-5 ">
+                  {link.subLinks.map((subLink) => (
+                    <li
+                      key={subLink.title}
+                      className="text-nowrap hover:text-orange-400"
+                    >
+                      <Link href={subLink.href}>{subLink.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+
           <li className="bg-gradient-to-r from-[#0000ff] p-2 pt-1 pb-1 flex-grow-[1] flex items-center justify-center">
             <Link href="/" className="flex items-center justify-center">
               <b>发布</b>
