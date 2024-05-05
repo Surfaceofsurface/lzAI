@@ -1,5 +1,5 @@
 import Locate from "@/assets/locate.svg";
-import Triangle from "@/assets/triangle.svg";
+import AICard from "@/components/aicard";
 export default function AITools() {
   const aiToolsNavData = [
     {
@@ -149,37 +149,12 @@ export default function AITools() {
             <div>
               <ul className="grid grid-cols-5 grid-row-1 gap-1">
                 {usageCategory.content.map((item) => (
-                  <li
-                    className="bg-neutral-800 flex flex-col gap-2 p-3 "
-                    key={item.title}
-                  >
-                    <div className="flex gap-3 border-b-[1px] border-b-neutral-600 pb-2">
-                      <div>{item.cover}</div>
-                      <div className="truncate">
-                        <h4 className="font-bold">{item.title}</h4>
-                        <span className="truncate">{item.describe}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-1 overflow-hidden">
-                      {item.tag.map((t) => (
-                        <span
-                          className="shrink-0 bg-neutral-700 text-neutral-400 rounded-full p-1 pl-2 pr-2"
-                          key={t}
-                        >
-                          {t}
-                        </span>
-                      ))}
-
-                      <span className="ml-auto">
-                        <Triangle
-                          width="9"
-                          height="9"
-                          className="fill-gray-500"
-                        />
-                      </span>
-                    </div>
-                  </li>
+                  <AICard
+                    title={item.title}
+                    describe={item.describe}
+                    cover={item.cover}
+                    tags={item.tag}
+                  ></AICard>
                 ))}
               </ul>
             </div>
