@@ -1,5 +1,6 @@
 import Locate from "@/assets/locate.svg";
 import AICard from "@/components/aicard";
+import Link from "next/link";
 export default function AITools() {
   const aiToolsNavData = [
     {
@@ -149,12 +150,16 @@ export default function AITools() {
             <div>
               <ul className="grid grid-cols-5 grid-row-1 gap-1">
                 {usageCategory.content.map((item) => (
-                  <AICard
-                    title={item.title}
-                    describe={item.describe}
-                    cover={item.cover}
-                    tags={item.tag}
-                  ></AICard>
+                  <li key={item.title}>
+                    <Link href="/nav">
+                      <AICard
+                        title={item.title}
+                        describe={item.describe}
+                        cover={item.cover}
+                        tags={item.tag}
+                      ></AICard>
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>

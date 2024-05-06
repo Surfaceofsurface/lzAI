@@ -153,13 +153,16 @@ export default function NavMain() {
           <div className="pt-4 ">
             <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
-                <AICard
-                  title={card.title}
-                  cover={card.cover}
-                  describe={card.describe}
-                  tags={card.tag}
-                  key={card.title}
-                ></AICard>
+                <li key={card.title}>
+                  <Link href="/nav">
+                    <AICard
+                      title={card.title}
+                      cover={card.cover}
+                      describe={card.describe}
+                      tags={card.tag}
+                    ></AICard>
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -175,13 +178,16 @@ export default function NavMain() {
           <div className="pt-4 ">
             <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
-                <AICard
-                  title={card.title}
-                  cover={card.cover}
-                  describe={card.describe}
-                  tags={card.tag}
-                  key={card.title}
-                ></AICard>
+                <li key={card.title}>
+                  <Link href="/nav">
+                    <AICard
+                      title={card.title}
+                      cover={card.cover}
+                      describe={card.describe}
+                      tags={card.tag}
+                    ></AICard>
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -198,13 +204,16 @@ export default function NavMain() {
           <div className="pt-4 ">
             <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
-                <AICard
-                  title={card.title}
-                  cover={card.cover}
-                  describe={card.describe}
-                  tags={card.tag}
-                  key={card.title}
-                ></AICard>
+                <li key={card.title}>
+                  <Link href="/nav">
+                    <AICard
+                      title={card.title}
+                      cover={card.cover}
+                      describe={card.describe}
+                      tags={card.tag}
+                    ></AICard>
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -221,13 +230,16 @@ export default function NavMain() {
           <div className="pt-4 ">
             <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
-                <AICard
-                  title={card.title}
-                  cover={card.cover}
-                  describe={card.describe}
-                  tags={card.tag}
-                  key={card.title}
-                ></AICard>
+                <li key={card.title}>
+                  <Link href="/nav">
+                    <AICard
+                      title={card.title}
+                      cover={card.cover}
+                      describe={card.describe}
+                      tags={card.tag}
+                    ></AICard>
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
