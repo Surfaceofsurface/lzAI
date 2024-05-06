@@ -1,5 +1,8 @@
+"use client";
+
 import Locate from "@/assets/locate.svg";
 import AICard from "@/components/aicard";
+import { motion } from "framer-motion";
 import Link from "next/link";
 export default function AITools() {
   const aiToolsNavData = [
@@ -135,7 +138,16 @@ export default function AITools() {
     },
   ];
   return (
-    <section className="flex flex-col">
+    <motion.div
+      className="flex flex-col"
+      initial={{ opacity: 0, transform: "translateY(1rem)" }}
+      whileInView={{
+        opacity: 1,
+        transform: "translateY(0)",
+        transition: { duration: 0.4 },
+      }}
+      viewport={{ once: true }}
+    >
       <h2 className="text-4xl font-bold tracking-widest mb-8">AI导航站</h2>
       <p className="text-2xl font-bold tracking-widest mb-8">
         “AI 工具包尽在这里，一站式导航”
@@ -149,8 +161,20 @@ export default function AITools() {
 
             <div>
               <ul className="grid grid-cols-5 grid-row-1 gap-1">
-                {usageCategory.content.map((item) => (
-                  <li key={item.title}>
+                {usageCategory.content.map((item, i) => (
+                  <motion.li
+                    key={item.title}
+                    viewport={{ once: true }}
+                    initial={{
+                      opacity: 0,
+                      transform: "translate(-40%,20%) scale(0.5)",
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      transform: "scale(1) translate(0,0)",
+                      transition: { delay: i * 0.08, duration: 0.4 },
+                    }}
+                  >
                     <Link href="/nav">
                       <AICard
                         title={item.title}
@@ -159,13 +183,13 @@ export default function AITools() {
                         tags={item.tag}
                       ></AICard>
                     </Link>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
           </div>
         ))}
       </div>
-    </section>
+    </motion.div>
   );
 }

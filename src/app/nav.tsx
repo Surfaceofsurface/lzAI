@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import Search from "@/assets/search.svg";
 import Triangle from "@/assets/triangle.svg";
+import ActiveLogo from "@/components/activelogo";
 export default function Nav({ highlightIndex }: { highlightIndex: number }) {
   const navLinks = [
     { title: "首页", href: "/" },
@@ -32,7 +32,7 @@ export default function Nav({ highlightIndex }: { highlightIndex: number }) {
   return (
     <nav className="flex items-center p-10 pt-3 pb-3 bg-black/50 gap-6 md:gap-8 lg:gap-12 ">
       <div className="flex md:flex-col gap-4 md:gap-1 justify-center items-center">
-        <Image src="/logo.svg" alt="OurLogo" height={55} width={55} />
+        <ActiveLogo></ActiveLogo>
         <span>
           <b>Prompt Flow</b>
         </span>

@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function PromptShare() {
   return (
@@ -11,7 +13,16 @@ export default function PromptShare() {
             )
             .map((text, i) => (
               <div className="bg-white text-black p-8 col-span-2" key={i}>
-                {text}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{
+                    opacity: 1,
+                    transition: { duration: 0.4 },
+                  }}
+                  viewport={{ once: true }}
+                >
+                  {text}
+                </motion.span>
               </div>
             ))}
         </header>
@@ -24,10 +35,17 @@ export default function PromptShare() {
               alt="AI example"
               className="object-cover h-full"
             ></Image>
-            <span
+            <motion.span
               className="absolute flex flex-col gap-2 w-full
                  p-2 bottom-0 bg-white rounded-t-md text-black 
                  truncate"
+              initial={{ opacity: 0, transform: "translateY(1rem)" }}
+              whileInView={{
+                opacity: 1,
+                transform: "translateY(0)",
+                transition: { duration: 0.4 },
+              }}
+              viewport={{ once: true }}
             >
               <p>咒语：techno Shakespearean hijabi</p>
               <div className="flex justify-between">
@@ -40,7 +58,7 @@ export default function PromptShare() {
                   <span>点赞</span>
                 </span>
               </div>
-            </span>
+            </motion.span>
           </span>
           <span className="relative flex flex-col basis-0 w-full grow-[3] overflow-hidden">
             <Image
@@ -50,10 +68,17 @@ export default function PromptShare() {
               alt="AI example"
               className="object-cover h-full"
             ></Image>
-            <span
+            <motion.span
               className="absolute flex flex-col gap-2 w-full
                  p-2 bottom-0 bg-white rounded-t-md text-black 
                  truncate"
+              initial={{ opacity: 0, transform: "translateY(1rem)" }}
+              whileInView={{
+                opacity: 1,
+                transform: "translateY(0)",
+                transition: { duration: 0.4 },
+              }}
+              viewport={{ once: true }}
             >
               <p>咒语：techno Shakespearean hijabi</p>
               <div className="flex justify-between">
@@ -66,7 +91,7 @@ export default function PromptShare() {
                   <span>点赞</span>
                 </span>
               </div>
-            </span>
+            </motion.span>
           </span>
           <span className="relative flex flex-col basis-0 w-full grow-[3] overflow-hidden">
             <Image
@@ -76,10 +101,17 @@ export default function PromptShare() {
               alt="AI example"
               className="object-cover h-full"
             ></Image>
-            <span
+            <motion.span
               className="absolute flex flex-col gap-2 w-full
                  p-2 bottom-0 bg-white rounded-t-md text-black 
                  truncate"
+              initial={{ opacity: 0, transform: "translateY(1rem)" }}
+              whileInView={{
+                opacity: 1,
+                transform: "translateY(0)",
+                transition: { duration: 0.4 },
+              }}
+              viewport={{ once: true }}
             >
               <p>咒语：techno Shakespearean hijabi</p>
               <div className="flex justify-between">
@@ -92,7 +124,7 @@ export default function PromptShare() {
                   <span>点赞</span>
                 </span>
               </div>
-            </span>
+            </motion.span>
           </span>
         </div>
         <footer className="flex gap-2">
