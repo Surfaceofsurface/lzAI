@@ -3,46 +3,41 @@ import WeChatSVG from "@/assets/wechat.svg";
 import Locate from "@/assets/locate.svg";
 import AICard from "@/components/aicard";
 import Link from "next/link";
-import { useIntersectionObserver } from "@reactuses/core";
 import { useRef } from "react";
+import useNavIndex from "./useNavIndex";
 export default function NavMain() {
   const rootRef = useRef<HTMLDivElement>(null);
   const observerOption = {
     root: rootRef.current,
-    rootMargin: "0px",
+    rootMargin: "-5px",
     threshold: 1,
   };
   const chatRef = useRef<HTMLDivElement>(null);
+  const writeRef = useRef<HTMLDivElement>(null);
   const designRef = useRef<HTMLDivElement>(null);
-  const designStop = useIntersectionObserver(
-    designRef,
-    (entry) => {
-      //判断被观测者的位置
-      const viewPortH = entry[0].rootBounds!.height;
-      const observereeTop = entry[0].intersectionRect.top;
-      //计算被观察者离视口顶端与视口高度的占比
-      const topRatio = observereeTop / viewPortH;
-      console.log(entry);
-
-      if (topRatio > 0.8) return; //从下面出现(或消失)
-      //从上面出现(或消失)
-      if (entry[0].intersectionRatio === 1) {
-        //从上面出现
-        console.log("从上面出现");
-      } else {
-        //从上面消失
-        console.log("从上面消失");
-      }
-    },
+  const meidaRef = useRef<HTMLDivElement>(null);
+  const [asideIndex, setAsideIndex] = useNavIndex(
+    [chatRef, writeRef, designRef, meidaRef],
     observerOption
   );
-  // const designStop = useIntersectionObserver(
-  //   designRef,
-  //   (entry) => {
-  //     console.log(entry);
-  //   },
-  //   observerOption
-  // );
+  const navAsideData = [
+    {
+      title: "AI聊天与助手",
+      href: "#chat",
+    },
+    {
+      title: "AI写作与文本",
+      href: "#write",
+    },
+    {
+      title: "AI图像与设计",
+      href: "#design",
+    },
+    {
+      title: "AI音频与视频",
+      href: "#media",
+    },
+  ];
   let navCardsData: {
     title: string;
     cover: React.ReactNode;
@@ -130,23 +125,20 @@ export default function NavMain() {
       tag: ["AI图像生成器", "艺术风格", "免费", "DeepAI"],
     },
   ];
-  navCardsData = navCardsData.concat(navCardsData);
   return (
     <main className="flex flex-1 overflow-hidden" ref={rootRef}>
       <aside className="basis-0 grow-[1]">
-        <ul className="flex flex-col p-2 gap-4">
-          <li>
-            <Link href="#chat">AI聊天与助手</Link>
-          </li>
-          <li>
-            <Link href="#write">AI写作与文本</Link>
-          </li>
-          <li>
-            <Link href="#design">AI图像与设计</Link>
-          </li>
-          <li>
-            <Link href="#media">AI音频与视频</Link>
-          </li>
+        <ul className="flex flex-col pt-4 gap-4 text-sm font-semibold">
+          {navAsideData.map((item, i) => (
+            <li
+              key={item.href}
+              className={`flex justify-center ${
+                asideIndex === i ? "bg-gradient-to-r from-[#0000ff]" : ""
+              }`}
+            >
+              <Link href={item.href}>{item.title}</Link>
+            </li>
+          ))}
         </ul>
       </aside>
       <main className="basis-0 grow-[9] h-full overflow-y-scroll scroll-smooth bg-neutral-900 p-3 text-gray-400">
@@ -159,7 +151,29 @@ export default function NavMain() {
             <a>点击查看更多+</a>
           </hgroup>
           <div className="pt-4 ">
-            <ul className="grid grid-cols-5 grid-rows-4 text-xs gap-4">
+            <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
+              {navCardsData.map((card) => (
+                <AICard
+                  title={card.title}
+                  cover={card.cover}
+                  describe={card.describe}
+                  tags={card.tag}
+                  key={card.title}
+                ></AICard>
+              ))}
+            </ul>
+          </div>
+        </section>
+        <section className="mt-4" id="write">
+          <hgroup className="flex justify-between">
+            <h4 className="flex" ref={writeRef}>
+              <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
+              <span>AI写作与文本</span>
+            </h4>
+            <a>点击查看更多+</a>
+          </hgroup>
+          <div className="pt-4 ">
+            <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
                 <AICard
                   title={card.title}
@@ -182,7 +196,30 @@ export default function NavMain() {
             <a>点击查看更多+</a>
           </hgroup>
           <div className="pt-4 ">
-            <ul className="grid grid-cols-5 grid-rows-4 text-xs gap-4">
+            <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
+              {navCardsData.map((card) => (
+                <AICard
+                  title={card.title}
+                  cover={card.cover}
+                  describe={card.describe}
+                  tags={card.tag}
+                  key={card.title}
+                ></AICard>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="mt-4" id="media">
+          <hgroup className="flex justify-between">
+            <h4 className="flex" ref={meidaRef}>
+              <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
+              <span>AI音频与视频</span>
+            </h4>
+            <a>点击查看更多+</a>
+          </hgroup>
+          <div className="pt-4 ">
+            <ul className="grid grid-cols-5 grid-rows-2 text-xs gap-4">
               {navCardsData.map((card) => (
                 <AICard
                   title={card.title}
