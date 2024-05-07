@@ -11,7 +11,7 @@ export default function AICard({
   tags: string[];
 }) {
   return (
-    <div className="bg-neutral-800 flex flex-col gap-2 p-3 " key={title}>
+    <div className="bg-neutral-800 flex flex-col gap-2 p-3 rounded-md" key={title}>
       <div className="flex gap-3 border-b-[1px] border-b-neutral-600 pb-2">
         <div>{cover}</div>
         <div className="truncate">
