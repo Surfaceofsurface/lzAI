@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import useNavIndex from "./useNavIndex";
 
-import { navCardsData } from "./pageCards";
+import { navCardsData } from "./pageData";
 
 export default function NavMain() {
   const rootRef = useRef<HTMLDivElement>(null);
