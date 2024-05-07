@@ -9,13 +9,6 @@ export default function Page() {
     <main className="p-16">
       <header className="flex gap-6 mb-12 mr-44">
         <div className="basis-0 grow-[1] flex flex-col text-white text-xs bg-black rounded-lg p-4">
-          <span className=" bg-red-500 rounded-full ml-auto flex p-1 gap-2">
-            <i>
-              <Locate className="w-4 h-4 stroke-white fill-transparent stroke-2"></Locate>
-            </i>
-
-            <span>美国</span>
-          </span>
           <div>
             <Image
               className="rounded-lg"
@@ -27,9 +20,17 @@ export default function Page() {
           </div>
         </div>
         <hgroup className="basis-0 grow-[2] flex flex-col justify-between gap-4">
-          <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-1">
-            <Link href="/nav#chat">AI聊天与助手</Link>
-          </span>
+          <div className="flex gap-2 w-1/4">
+            <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-2 w-20 flex justify-between">
+              <i>
+                <Locate className="w-4 h-4 stroke-white fill-transparent stroke-2"></Locate>
+              </i>
+              <span>美国</span>
+            </span>
+            <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-1 w-30 flex-center justify-center">
+              <Link href="/nav#chat" className="flex-center justify-center">AI聊天与助手</Link>
+            </span>
+          </div>
           <h2 className="text-2xl font-bold">ChatGPT</h2>
           <p>
             ChatGPT可以通过对用户输入的语句进行分析和理解，生成符合语境和逻辑的自然语言回复。
@@ -42,7 +43,7 @@ export default function Page() {
             <li className="rounded-lg bg-neutral-800 hover:bg-neutral-700 p-2">
               <Link
                 href="https://chat.openai.com/auth/login"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 "
               >
                 <span>链接直达</span>
                 <i>
