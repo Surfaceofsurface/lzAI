@@ -1,21 +1,71 @@
 import Image from "next/image";
+import Link from "next/link";
+import Locate from "@/assets/locate.svg";
+import { IoIosArrowForward } from "react-icons/io";
+import { BiScan } from "react-icons/bi";
+import { MdReport } from "react-icons/md";
 export default function Page() {
   return (
     <main className="p-16">
-      <header className="flex gap-6 mb-12">
-        <div>
-          <Image
-            height={80}
-            width={80}
-            alt="chatGPT"
-            src="/chatgptPage.jpg"
-          ></Image>
+      <header className="flex gap-6 mb-12 mr-44">
+        <div className="basis-0 grow-[1] flex flex-col text-white text-xs bg-black rounded-lg p-4">
+          <span className=" bg-red-500 rounded-full ml-auto flex p-1 gap-2">
+            <i>
+              <Locate className="w-4 h-4 stroke-white fill-transparent stroke-2"></Locate>
+            </i>
+
+            <span>美国</span>
+          </span>
+          <div>
+            <Image
+              className="rounded-lg"
+              height={999}
+              width={999}
+              alt="chatGPT"
+              src="/chatgptPage.jpg"
+            ></Image>
+          </div>
         </div>
-        <hgroup className="flex flex-col">
-          <h2 className="text-xl font-bold">ChatGPT</h2>
+        <hgroup className="basis-0 grow-[2] flex flex-col justify-between gap-4">
+          <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-1">
+            <Link href="/nav#chat">AI聊天与助手</Link>
+          </span>
+          <h2 className="text-2xl font-bold">ChatGPT</h2>
           <p>
             ChatGPT可以通过对用户输入的语句进行分析和理解，生成符合语境和逻辑的自然语言回复。
           </p>
+          <span className="text-sm">
+            <i>标签：</i>
+            <span>AI聊天与助手</span>
+          </span>
+          <ul className="flex text-neutral-300 gap-2">
+            <li className="rounded-lg bg-neutral-800 hover:bg-neutral-700 p-2">
+              <Link
+                href="https://chat.openai.com/auth/login"
+                className="flex items-center gap-2"
+              >
+                <span>链接直达</span>
+                <i>
+                  <IoIosArrowForward></IoIosArrowForward>
+                </i>
+              </Link>
+            </li>
+            <li className="rounded-lg bg-neutral-800 hover:bg-neutral-700 p-2">
+              <Link href="#" className="flex items-center gap-2">
+                <span>手机查看</span>
+                <i>
+                  <BiScan></BiScan>
+                </i>
+              </Link>
+            </li>
+            <li className="rounded-lg bg-red-500 hover:bg-red-600 p-2">
+              <Link href="#" className="flex items-center gap-2">
+                <i>
+                  <MdReport className="w-6 h-6"></MdReport>
+                </i>
+              </Link>
+            </li>
+          </ul>
         </hgroup>
       </header>
       <article>
