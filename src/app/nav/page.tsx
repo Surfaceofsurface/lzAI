@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import WeChatSVG from "@/assets/wechat.svg";
-import Locate from "@/assets/locate.svg";
 import AICard from "@/components/aicard";
 import Link from "next/link";
 import { useRef } from "react";
@@ -67,7 +65,11 @@ export default function NavMain() {
       </aside>
       <main className="basis-0 grow-[9] h-full overflow-y-scroll scroll-smooth bg-neutral-900 p-3 text-gray-400">
         {navAsideData.map((item, itemI) => (
-          <section id={item.title.toLowerCase()} key={item.title} className="mb-8">
+          <section
+            id={item.title.toLowerCase()}
+            key={item.title}
+            className="mb-8"
+          >
             <hgroup className="flex justify-between">
               <h4 className="flex" ref={item.ref}>
                 <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
@@ -89,7 +91,7 @@ export default function NavMain() {
                         <AICard
                           title={card.title}
                           cover={card.cover}
-                          describe={card.describe.slice(0,20) + "..."}
+                          describe={card.describe.slice(0, 20) + "..."}
                           tags={card.tag}
                         ></AICard>
                       </Link>

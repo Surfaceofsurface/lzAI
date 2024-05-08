@@ -20,15 +20,17 @@ export default function Page() {
           </div>
         </div>
         <hgroup className="basis-0 grow-[2] flex flex-col justify-between gap-4">
-          <div className="flex gap-2 w-1/4">
-            <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-2 w-20 flex justify-between">
+          <div className="flex gap-2">
+            <span className="text-xs bg-red-500 text-white rounded-lg p-1 flex justify-between">
               <i>
                 <Locate className="w-4 h-4 stroke-white fill-transparent stroke-2"></Locate>
               </i>
               <span>美国</span>
             </span>
-            <span className="text-xs bg-red-500 text-white rounded-lg mr-auto p-1 w-30 flex-center justify-center">
-              <Link href="/nav#chat" className="flex-center justify-center">AI聊天与助手</Link>
+            <span className="text-xs bg-red-500 text-white rounded-lg p-1 flex-center justify-center">
+              <Link href="/nav#chat" className="flex-center justify-center">
+                AI聊天与助手
+              </Link>
             </span>
           </div>
           <h2 className="text-2xl font-bold">ChatGPT</h2>
