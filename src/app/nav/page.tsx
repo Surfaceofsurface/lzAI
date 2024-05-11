@@ -9,7 +9,7 @@ import useNavIndex from "./useNavIndex";
 
 import { navCardsData } from "./pageData";
 
-export default function NavMain() {
+export default async function NavMain() {
   const rootRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<Map<string, HTMLElement>>(new Map());
   const observerOption = {
@@ -37,7 +37,9 @@ export default function NavMain() {
       href: "#media",
     },
   ];
-
+  const navCardsData = await fetch(
+    "http://121.196.237.175:61087/api/product/list"
+  ).then((res) => res.json());
   return (
     <main className="flex flex-1 overflow-hidden" ref={rootRef}>
       <aside className="basis-0 grow-[1]">
@@ -88,7 +90,7 @@ export default function NavMain() {
                       whileTap={{ scale: 0.95 }}
                       key={card.title}
                     >
-                      <Link href={"/nav/chatgpt?i=" + itemI}>
+                      <Link href={`/nav/${card.title}?i=` + itemI}>
                         <AICard
                           title={card.title}
                           cover={card.cover}
