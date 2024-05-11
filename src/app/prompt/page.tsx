@@ -1,5 +1,10 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
+import { IoClose, IoStar } from "react-icons/io5";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { TbThumbUp } from "react-icons/tb";
+import { IoIosShareAlt } from "react-icons/io";
+import Triangle from "@/assets/triangle.svg";
 import { useState } from "react";
 import Image from "next/image";
 export default function PromptPage() {
@@ -16,110 +21,155 @@ export default function PromptPage() {
   const [selectedId, setSelectedId] = useState("");
 
   return (
-    <ul className="relative flex flex-col lg:flex-row gap-4">
-      <section className="basis-0 grow-[1]">
-        {d.slice(0, 2).map((src) => (
-          <>
-            <div
-              className={`invisible ${selectedId === src ? "block" : "hidden"}`}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-              {/* 为了防止动画发生时内容由于绝对定位坍塌 */}
-            </div>
+    <>
+      <ul className="relative flex flex-wrap lg:flex-row max-w-screen-lg">
+        {d.map((src) => (
+          <li className={"overflow-hidden grow-0 shrink-0 basis-1/3"}>
             <motion.div
-              className={
+              layout
+              onClick={() => setSelectedId(src)}
+              className={`bg-neutral-900 ${
                 selectedId === src
-                  ? "fixed top-0 w-full h-full p-12 pl-20 pr-20 bg-black/50"
-                  : "relative"
-              }
-              key={src}
-              onClick={() => {
-                setSelectedId(src);
-              }}
-              layoutId={src}
+                  ? "fixed left-0 top-0 z-10 m-12 flex items-center rounded-xl overflow-hidden"
+                  : ""
+              }`}
             >
-              <main
-                className={`flex justify-around bg-green-300 h-full ${
-                  selectedId === src ? "rounded-2xl" : "rounded-none"
-                } overflow-hidden`}
-              >
-                <div className="flex h-full items-center basis-0 grow-[1]">
-                  <Image height={999} width={999} alt="next" src={src}></Image>
-                </div>
-                {selectedId === src && (
-                  <div className="basis-0 grow-[2]">123456789</div>
-                )}
-              </main>
+              <motion.div layout className={`flex`}>
+                <motion.div
+                  layout
+                  className={`${
+                    selectedId === src
+                      ? "basis-0 grow-[1] h-[75vh]"
+                      : "basis-full flex-shrink-0"
+                  }`}
+                >
+                  <Image
+                    height={999}
+                    width={999}
+                    alt="next"
+                    src={src}
+                    className="h-full object-cover"
+                  ></Image>
+                </motion.div>
+
+                <main
+                  className={`flex-col ${
+                    selectedId === src ? "flex basis-0 " : "hidden"
+                  } flex-shrink-0 grow-[1]`}
+                >
+                  <header className="flex flex-col border-b gap-1 p-4 pb-1">
+                    <button
+                      className="ml-auto hover:bg-red-700 rounded-md"
+                      onClick={() => setSelectedId("")}
+                    >
+                      <IoClose />
+                    </button>
+                    <div className="flex justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-slate-200 rounded-full w-8 h-8"></div>
+                        <div>用户</div>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button className="bg-blue-700 rounded-full pl-2 pr-2">
+                          关注
+                        </button>
+                        <button className="bg-gray-700 rounded-full pl-2 pr-2">
+                          已关注
+                        </button>
+                      </div>
+                    </div>
+                    <div>用途：小红书爆款封面</div>
+                  </header>
+                  <main className="border-b flex-1">
+                    <div>
+                      <div>标题</div>
+                      <div>描述</div>
+                    </div>
+                    <div>
+                      <button>复制</button>
+                    </div>
+                  </main>
+                  <footer className="p-4 pb-1">
+                    <div className="text-neutral-400">共14条评论</div>
+                    <ul className="p-2">
+                      <li>
+                        <div className="flex gap-2 items-center">
+                          <div className="bg-slate-200 rounded-full w-8 h-8"></div>
+                          <div>xxx</div>
+                        </div>
+                        <div className="p-4 pt-1 pb-1">
+                          <p>很好...</p>
+                          <button className="flex items-center text-xs">
+                            <span>展开一条回复</span>
+
+                            <Triangle
+                              width="6"
+                              height="6"
+                              className="fill-white"
+                            ></Triangle>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                    <footer className="flex justify-between pb-2">
+                      <div className="relative p-4 pt-1 pb-1">
+                        <div className="absolute bg-black rounded-full w-6 h-6 ml-1 top-[calc(50%-0.75rem)]"></div>
+                        <input
+                          type="text"
+                          placeholder="说点什么..."
+                          className="bg-gray-300 text-black rounded-full h-8 pl-9 pr-4 w-40"
+                        />
+                      </div>
+                      <ul className="flex gap-2">
+                        <li className="flex items-center">
+                          <i>
+                            <TbThumbUp />
+                          </i>
+                          <span>点赞</span>
+                        </li>
+                        <li className="flex items-center">
+                          <i>
+                            <IoStar />
+                          </i>
+                          <span>收藏</span>
+                        </li>
+                        <li className="flex items-center">
+                          <i>
+                            <RiSendPlaneFill />
+                          </i>
+                          <span>评论</span>
+                        </li>
+                        <li className="flex items-center">
+                          <i>
+                            <IoIosShareAlt />
+                          </i>
+                          <span>转发</span>
+                        </li>
+                      </ul>
+                    </footer>
+                  </footer>
+                </main>
+              </motion.div>
             </motion.div>
-          </>
-        ))}
-      </section>
-      <section className="basis-0 grow-[1]">
-        {d.slice(2, 3).map((src) => (
-          <>
             <div
               className={`invisible ${selectedId === src ? "block" : "hidden"}`}
             >
-              <Image height={999} width={999} alt="next" src={src}></Image>
               {/* 为了防止动画发生时内容由于绝对定位坍塌 */}
+
+              <Image height={999} width={999} alt="next" src={src}></Image>
             </div>
-            <motion.div
-              className={selectedId === src ? "fixed bottom-0" : ""}
-              key={src}
-              onClick={() => {
-                setSelectedId(src);
-              }}
-              layoutId={src}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-            </motion.div>
-          </>
+          </li>
         ))}
-      </section>
-      <section className="basis-0 grow-[1]">
-        {d.slice(3, 5).map((src) => (
-          <>
-            <div
-              className={`invisible ${selectedId === src ? "block" : "hidden"}`}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-              {/* 为了防止动画发生时内容由于绝对定位坍塌 */}
-            </div>
-            <motion.div
-              className={selectedId === src ? "fixed bottom-0" : ""}
-              key={src}
-              onClick={() => {
-                setSelectedId(src);
-              }}
-              layoutId={src}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-            </motion.div>
-          </>
-        ))}
-      </section>
-      <section className="basis-0 grow-[1]">
-        {d.slice(5).map((src) => (
-          <>
-            <div
-              className={`invisible ${selectedId === src ? "block" : "hidden"}`}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-              {/* 为了防止动画发生时内容由于绝对定位坍塌 */}
-            </div>
-            <motion.div
-              className={selectedId === src ? "fixed bottom-0" : ""}
-              key={src}
-              onClick={() => {
-                setSelectedId(src);
-              }}
-              layoutId={src}
-            >
-              <Image height={999} width={999} alt="next" src={src}></Image>
-            </motion.div>
-          </>
-        ))}
-      </section>
-    </ul>
+      </ul>
+      <div>
+        {selectedId && (
+          <div
+            className="fixed left-0 top-0 w-full h-full"
+            onClick={() => setSelectedId("")}
+          ></div>
+        )}
+      </div>
+    </>
   );
 }
