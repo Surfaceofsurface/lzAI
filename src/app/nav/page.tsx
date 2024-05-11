@@ -4,46 +4,37 @@ import { motion } from "framer-motion";
 import WeChatSVG from "@/assets/wechat.svg";
 import AICard from "@/components/aicard";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import useNavIndex from "./useNavIndex";
 
 import { navCardsData } from "./pageData";
 
 export default function NavMain() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<Map<string, HTMLElement>>(new Map());
   const observerOption = {
     root: rootRef.current,
     rootMargin: "-5px",
     threshold: 1,
   };
-  const chatRef = useRef<HTMLDivElement>(null);
-  const writeRef = useRef<HTMLDivElement>(null);
-  const designRef = useRef<HTMLDivElement>(null);
-  const meidaRef = useRef<HTMLDivElement>(null);
-  const [asideIndex, setAsideIndex] = useNavIndex(
-    [chatRef, writeRef, designRef, meidaRef],
-    observerOption
-  );
+  //有问题！！！
+  const [asideIndex, setAsideIndex] = useNavIndex([], observerOption);
   const navAsideData = [
     {
       title: "AI聊天与助手",
       href: "#chat",
-      ref: chatRef,
     },
     {
       title: "AI写作与文本",
       href: "#write",
-      ref: writeRef,
     },
     {
       title: "AI图像与设计",
       href: "#design",
-      ref: designRef,
     },
     {
       title: "AI音频与视频",
       href: "#media",
-      ref: meidaRef,
     },
   ];
 
@@ -66,12 +57,22 @@ export default function NavMain() {
       <main className="basis-0 grow-[9] h-full overflow-y-scroll scroll-smooth bg-neutral-900 p-3 text-gray-400">
         {navAsideData.map((item, itemI) => (
           <section
-            id={item.title.toLowerCase()}
+            id={item.href.substring(1)}
             key={item.title}
             className="mb-8"
           >
             <hgroup className="flex justify-between">
-              <h4 className="flex" ref={item.ref}>
+              <h4
+                className="flex"
+                ref={(el) => {
+                  const map = itemsRef.current;
+                  if (el) {
+                    map.set(item.title, el);
+                  } else {
+                    map.delete(item.title);
+                  }
+                }}
+              >
                 <WeChatSVG className="w-6 h-6 mr-2"></WeChatSVG>
                 <span>{item.title}</span>
               </h4>

@@ -1,6 +1,6 @@
-import { Dispatch, RefObject, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useIntersectionObserver } from "@reactuses/core";
-export default function useNavIndex(observereeEls: RefObject<HTMLElement>[],options?: IntersectionObserverInit | undefined) :[number,Dispatch<SetStateAction<number>>]{
+export default function useNavIndex(observereeEls: HTMLElement[],options?: IntersectionObserverInit | undefined) :[number,Dispatch<SetStateAction<number>>]{
   const [asideIndex, setAsideIndex] = useState(0);
   for (let i=0; i<observereeEls.length; i++) {
     useIntersectionObserver(observereeEls[i], (entry) => {
