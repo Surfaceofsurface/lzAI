@@ -11,7 +11,7 @@ export default function Nav({ highlightIndex }: { highlightIndex: number }) {
     },
     {
       title: "提示词",
-      href: "/",
+      href: "/prompt",
       subLinks: [
         { title: "AI写作与文本", href: "/" },
         { title: "AI图像与设计", href: "/" },
