@@ -42,7 +42,7 @@ export default function PromptPage() {
     threshold: 1,
   };
   //有问题！！！
-  const [asideIndex, setAsideIndex] = useNavIndex([], observerOption);
+  const [asideIndex, setAsideIndex] = useNavIndex(() => [], observerOption);
   return (
     <>
       <main className="flex flex-1 overflow-auto" ref={rootRef}>

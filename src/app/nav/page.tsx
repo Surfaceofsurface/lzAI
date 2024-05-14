@@ -9,7 +9,7 @@ import useNavIndex from "./useNavIndex";
 
 import { navCardsData } from "./pageData";
 
-export default async function NavMain() {
+export default function NavMain() {
   const rootRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<Map<string, HTMLElement>>(new Map());
   const observerOption = {
@@ -17,8 +17,10 @@ export default async function NavMain() {
     rootMargin: "-5px",
     threshold: 1,
   };
-  //有问题！！！
-  const [asideIndex, setAsideIndex] = useNavIndex([], observerOption);
+  const [asideIndex, setAsideIndex] = useNavIndex(
+    () => Array.from(itemsRef.current.values()),
+    observerOption
+  );
   const navAsideData = [
     {
       title: "AI聊天与助手",
@@ -37,9 +39,7 @@ export default async function NavMain() {
       href: "#media",
     },
   ];
-  const navCardsData = await fetch(
-    "http://121.196.237.175:61087/api/product/list"
-  ).then((res) => res.json());
+
   return (
     <main className="flex flex-1 overflow-hidden" ref={rootRef}>
       <aside className="basis-0 grow-[1]">

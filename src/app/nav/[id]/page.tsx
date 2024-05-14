@@ -7,12 +7,20 @@ import { BiScan } from "react-icons/bi";
 import { MdReport } from "react-icons/md";
 import { usePathname } from "next/navigation";
 export default async function Page() {
-  const pathname = usePathname();
+  const pathname = usePathname(); // if path is "http://localhost:3000/nav/chatgpt?i=0", this will be "/nav/chatgpt"
   const product = pathname.split("/")[2];
-  //http://localhost:3000/nav/chatgpt?i=0
   const d = await fetch(
-    `http://121.196.237.175:61087/api/system/product/detail?product=${product}`
-  ).then((res) => res.json());
+    `http://121.196.237.175:61087/api/product/detail?product=${product}`
+  ).then((res) => {
+    if (res.status >= 200 && res.status < 300) return res.json();
+    return {
+      title: "chatGPT",
+      group: "AI聊天与助手",
+      cover: "/chatgpt.webp",
+      describe: "ChatGPT可以通过对用户输入的语句",
+      tag: ["AI聊天与助手"],
+    };
+  });
   return (
     <main className="p-16">
       <header className="flex gap-6 mb-12 mr-44">
@@ -36,10 +44,11 @@ export default async function Page() {
               <span>{d.country}</span>
             </span>
             <span className="text-xs bg-red-500 text-white rounded-lg p-1 flex-center justify-center">
-              {d.tag.map(t=>              <Link href="/nav#chat" className="flex-center justify-center">
-                {t}
-              </Link>)}
-
+              {d.tag.map((t: string) => (
+                <Link href="/nav#chat" className="flex-center justify-center">
+                  {t}
+                </Link>
+              ))}
             </span>
           </div>
           <h2 className="text-2xl font-bold">{d.title}</h2>
@@ -50,10 +59,7 @@ export default async function Page() {
           </span>
           <ul className="flex text-neutral-300 gap-2">
             <li className="rounded-lg bg-neutral-800 hover:bg-neutral-700 p-2">
-              <Link
-                href={d.link}
-                className="flex items-center gap-2 "
-              >
+              <Link href={d.link} className="flex items-center gap-2 ">
                 <span>链接直达</span>
                 <i>
                   <IoIosArrowForward></IoIosArrowForward>
@@ -79,10 +85,9 @@ export default async function Page() {
         </hgroup>
       </header>
       <article>
-        {d.article.map((t:string) => {        <p>
-          {t}
-        </p>})}
-
+        {d.article.map((t: string) => {
+          <p>{t}</p>;
+        })}
       </article>
     </main>
   );
