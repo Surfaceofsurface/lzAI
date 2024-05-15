@@ -62,7 +62,10 @@ export default function PromptPage() {
         </aside>
         <ul className="relative basis-0 grow-[9] flex flex-wrap lg:flex-row">
           {d.map((src) => (
-            <li className={"overflow-hidden grow-0 shrink-0 basis-1/3"}>
+            <li
+              key={src}
+              className={"overflow-hidden grow-0 shrink-0 basis-1/3"}
+            >
               <motion.div
                 layout
                 onClick={() => setSelectedId(src)}
