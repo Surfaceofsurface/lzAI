@@ -6,7 +6,8 @@ import { BiScan } from "react-icons/bi";
 import { MdReport } from "react-icons/md";
 export default async function Page({ params }: { params: { id: string } }) {
   const d = await fetch(
-    `http://121.196.237.175:61087/api/product/detail?product=${params.id}`
+    `http://121.196.237.175:61087/api/product/detail?product=${params.id}`,
+    { next: { revalidate: 15 } }
   )
     .then((res) => {
       if (res.status >= 200 && res.status < 300) return res.json();
@@ -17,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         describe: "ChatGPT可以通过对用户输入的语句",
         link: "https://openai.com/",
         country: "美国",
-        tag: ["AI聊天与助手"],
+        tags: ["AI聊天与助手"],
         article: [
           "ChatGPT是一种基于GPT（Generative Pre-trained Transformer）技术的自然语言处理模型，它可以进行人机交互，实现智能对话。ChatGPT可以通过对用户输入的语句进行分析和理解，生成符合语境和逻辑的自然语言回复。",
           "如果你需要在境内使用，请前往：https://aivesa.cn/",
@@ -33,7 +34,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         describe: "ChatGPT可以通过对用户输入的语句",
         link: "https://openai.com/",
         country: "美国",
-        tag: ["AI聊天与助手"],
+        tags: ["AI聊天与助手"],
         article: [
           "ChatGPT是一种基于GPT（Generative Pre-trained Transformer）技术的自然语言处理模型，它可以进行人机交互，实现智能对话。ChatGPT可以通过对用户输入的语句进行分析和理解，生成符合语境和逻辑的自然语言回复。",
           "如果你需要在境内使用，请前往：https://aivesa.cn/",
@@ -64,7 +65,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               <span>{d.country}</span>
             </span>
             <span className="text-xs bg-red-500 text-white rounded-lg p-1 flex-center justify-center">
-              {d.tag.map((t: string) => (
+              {d.tags.map((t: string) => (
                 <Link
                   href="/nav#chat"
                   className="flex-center justify-center"
