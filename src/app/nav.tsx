@@ -30,7 +30,7 @@ export default function Nav({ highlightIndex }: { highlightIndex: number }) {
     },
   ];
   return (
-    <nav className="flex items-center p-10 pt-3 pb-3 bg-black/50 gap-6 md:gap-8 lg:gap-12 ">
+    <nav className="flex items-center p-10 pt-3 pb-3 bg-black/50 gap-6 md:gap-8 lg:gap-12 z-10">
       <div className="flex md:flex-col gap-4 md:gap-1 justify-center items-center">
         <ActiveLogo></ActiveLogo>
         <span>
@@ -42,7 +42,7 @@ export default function Nav({ highlightIndex }: { highlightIndex: number }) {
           {navLinks.map((link, i) => (
             <li
               key={link.title}
-              className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out "
+              className="group relative p-2 pt-1 pb-1 flex-grow-[1]  flex items-center justify-center hover:scale-105 group transition-transform duration-500 ease-in-out z-10"
             >
               <Link
                 href={link.href}
@@ -62,7 +62,7 @@ export default function Nav({ highlightIndex }: { highlightIndex: number }) {
                 )}
               </Link>
               {link.subLinks && (
-                <ul className="group-hover:flex flex-col gap-2 hidden bg-neutral-900 absolute top-10 text-zinc-50 p-5 ">
+                <ul className="group-hover:flex flex-col gap-2 hidden bg-neutral-900 absolute top-10 text-zinc-50 p-5 z-10">
                   {link.subLinks.map((subLink) => (
                     <li
                       key={subLink.title}
