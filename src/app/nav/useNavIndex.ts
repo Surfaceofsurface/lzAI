@@ -31,7 +31,7 @@ export default function useNavIndex(
         observer.disconnect();
       });
     };
-  }, [options]);
+  }, [options, getObserverees]);
 
   return [asideIndex, setAsideIndex];
 }
