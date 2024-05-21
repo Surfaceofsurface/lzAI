@@ -15,7 +15,7 @@ export default function NavMain() {
   const observerOption = {
     root: rootRef.current,
     rootMargin: "-5px",
-    threshold: 1,
+    threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
   };
   const [asideIndex, setAsideIndex] = useNavIndex(
     () => Array.from(itemsRef.current.values()),
@@ -56,7 +56,7 @@ export default function NavMain() {
           ))}
         </ul>
       </aside>
-      <main className="basis-0 grow-[9] h-full overflow-y-scroll scroll-smooth bg-neutral-900 p-3 text-gray-400">
+      <main className="basis-0 grow-[9] h-full overflow-y-scroll bg-neutral-900 p-3 text-gray-400">
         {navAsideData.map((item, itemI) => (
           <section
             id={item.href.substring(1)}
