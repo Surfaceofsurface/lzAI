@@ -12,11 +12,15 @@ export default function useNavIndex(
     observereeEls.forEach((el, i) => {
       const observer = new IntersectionObserver((entries) => {
         const entry = entries[0];
+
+        if (entry.intersectionRatio === 0) return; //不在视口内
         //判断被观测者的位置
         const viewPortH = entry.rootBounds!.height;
+        const viewPortOffsetTop = entry.rootBounds!.top;
         const observereeTop = entry.intersectionRect.top;
+        const observereeInViewportTop = observereeTop - viewPortOffsetTop;
         //计算被观察者离视口顶端与视口高度的占比
-        const topRatio = observereeTop / viewPortH;
+        const topRatio = observereeInViewportTop / viewPortH;
         if (topRatio > 0.8) return; //从下面出现(或消失)
         //从上面出现(或消失)
         // if (entry.intersectionRatio !== 1) {}//从上面出现
