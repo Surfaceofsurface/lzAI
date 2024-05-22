@@ -9,8 +9,7 @@ import Arc from "@/assets/arc.svg";
 import { useState, useRef } from "react";
 
 export default function Home() {
-  const [homeIndex, setHomeIndex] = useState(0);
-  console.log(homeIndex);
+  const [homeIndex, setHomeIndex] = useState(1);
   const homeBgImgURLs = useRef([
     "/prompt3.png",
     "/homeAstro.png",
