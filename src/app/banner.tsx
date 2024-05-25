@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Banner() {
   return (
     <header className="flex justify-between bg-black h-6 p-10 pt-8 pb-8">
@@ -9,9 +11,13 @@ export default function Banner() {
         <span>
           <div className="bg-slate-200 rounded-full w-8 h-8"></div>
         </span>
-        <button>登录</button>
+        <button>
+          <Link href="/login">登录</Link>
+        </button>
         <span>|</span>
-        <button>注册</button>
+        <button>
+          <Link href="/register">注册</Link>
+        </button>
       </div>
     </header>
   );
