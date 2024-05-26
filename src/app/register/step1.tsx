@@ -12,14 +12,23 @@ enum FormState {
   ERR,
   CORRECT,
 }
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-const pswRegex = /^.+$/;
+
 export default forwardRef<StepOneRef, StepOneProps>(function StepOne(
   {
     setFormMsg,
     display = true,
+    onPswInput,
+    onAccountInput,
   }: {
     setFormMsg: Dispatch<SetStateAction<string>>;
+    onPswInput?: (
+      psw: FormEvent<HTMLInputElement>,
+      setPswState: Dispatch<SetStateAction<FormState>>
+    ) => any;
+    onAccountInput?: (
+      account: FormEvent<HTMLInputElement>,
+      setAccoutState: Dispatch<SetStateAction<FormState>>
+    ) => any;
     display: boolean;
   },
   ref
@@ -38,26 +47,7 @@ export default forwardRef<StepOneRef, StepOneProps>(function StepOne(
       },
     };
   });
-  function handleAccountInput(e: FormEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    if (!emailRegex.test(value)) {
-      setFormMsg("请输入格式正确的邮箱");
-      setAccoutState(FormState.ERR);
-    } else {
-      setFormMsg("");
-      setAccoutState(FormState.CORRECT);
-    }
-  }
-  function handlePswInput(e: FormEvent<HTMLInputElement>) {
-    const psw = e.currentTarget.value;
-    if (!pswRegex.test(psw)) {
-      setFormMsg("请输入密码");
-      setPswState(FormState.ERR);
-    } else {
-      setFormMsg("");
-      setPswState(FormState.CORRECT);
-    }
-  }
+
   return (
     <>
       <div className={`${display ? "" : "hidden"}`}>
@@ -66,7 +56,7 @@ export default forwardRef<StepOneRef, StepOneProps>(function StepOne(
           name="account"
           type="text"
           placeholder="输入邮箱"
-          onInput={handleAccountInput}
+          onInput={(e) => onAccountInput && onAccountInput(e, setAccoutState)}
           className={`rounded-full w-full p-2 pl-4 pr-4 bg-stone-900 outline outline-1 outline-gray-500 transition-colors ${
             accoutState === FormState.ERR
               ? "outline-red-500 focus-within:outline-red-500 focus-visible:outline-red-500"
@@ -85,7 +75,7 @@ export default forwardRef<StepOneRef, StepOneProps>(function StepOne(
           name="psw"
           type="password"
           placeholder="输入密码"
-          onInput={handlePswInput}
+          onInput={(e) => onPswInput && onPswInput(e, setPswState)}
           className={`rounded-full w-full p-2 pl-4 pr-4 bg-stone-900 outline outline-1 outline-gray-500 transition-colors ${
             pswState === FormState.ERR
               ? "outline-red-500 focus-within:outline-red-500 focus-visible:outline-red-500"

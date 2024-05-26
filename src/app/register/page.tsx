@@ -1,7 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, MouseEvent, use, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  MouseEvent,
+  SetStateAction,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import StepOne from "./step1";
 import StepTwo from "./step2";
 import { handleRegister } from "@/app/actions/handleRegister";
@@ -22,7 +31,7 @@ enum FormActionState {
   CODE_UNKNOWN,
   REG_OK,
 }
-export default function Login() {
+export default function Register() {
   /*TODO: 
   -.后端返回失败结果的处理
   2.验证码发送成功后的倒计时
@@ -31,7 +40,6 @@ export default function Login() {
   const [formMsg, setFormMsg] = useState("");
   const regForm = useRef<StepOneRef>(null);
 
-  const agreeCheckbox = useRef<HTMLInputElement | null>(null);
   const [{ msg: formActionState }, formAction] = useFormState(handleRegister, {
     msg: FormActionState.INIT,
   });
@@ -43,7 +51,32 @@ export default function Login() {
       setFormMsg("");
     }
   }, [formActionState]);
-
+  function handleAccountInput(
+    e: FormEvent<HTMLInputElement>,
+    setAccoutState: Dispatch<SetStateAction<FormState>>
+  ) {
+    const value = e.currentTarget.value;
+    if (!emailRegex.test(value)) {
+      setFormMsg("请输入格式正确的邮箱");
+      setAccoutState(FormState.ERR);
+    } else {
+      setFormMsg("");
+      setAccoutState(FormState.CORRECT);
+    }
+  }
+  function handlePswInput(
+    e: FormEvent<HTMLInputElement>,
+    setPswState: Dispatch<SetStateAction<FormState>>
+  ) {
+    const psw = e.currentTarget.value;
+    if (!pswRegex.test(psw)) {
+      setFormMsg("请输入密码");
+      setPswState(FormState.ERR);
+    } else {
+      setFormMsg("");
+      setPswState(FormState.CORRECT);
+    }
+  }
   function handleSubmitClick(e: MouseEvent) {
     if (formActionState === FormActionState.CODE_OK) {
       //注册
@@ -96,6 +129,8 @@ export default function Login() {
           {
             <StepOne
               setFormMsg={setFormMsg}
+              onPswInput={handlePswInput}
+              onAccountInput={handleAccountInput}
               display={
                 formActionState !== FormActionState.CODE_OK &&
                 formActionState !== FormActionState.REG_OK
