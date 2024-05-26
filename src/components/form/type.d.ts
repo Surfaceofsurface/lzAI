@@ -1,9 +1,9 @@
-interface StepOneRef {
+interface AccountAndPswRef {
   getAccount(): string;
   getPsw(): string;
 }
 
-interface StepOneProps {
+interface AccountAndPswProps {
   setFormMsg: Dispatch<SetStateAction<string>>;
   display: boolean;
   onPswInput?: (

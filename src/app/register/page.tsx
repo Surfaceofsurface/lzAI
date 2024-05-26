@@ -6,15 +6,14 @@ import {
   FormEvent,
   MouseEvent,
   SetStateAction,
-  use,
   useEffect,
   useRef,
   useState,
 } from "react";
-import StepOne from "./step1";
-import StepTwo from "./step2";
+import StepOne from "@/components/form/accountAndPsw";
+import StepTwo from "@/components/form/vrfCode";
 import { handleRegister } from "@/app/actions/handleRegister";
-import SubmitButton from "./submitBtn";
+import SubmitButton from "@/components/form/submitBtn";
 import { useFormState } from "react-dom";
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -38,7 +37,7 @@ export default function Register() {
   3.注册功能
    */
   const [formMsg, setFormMsg] = useState("");
-  const regForm = useRef<StepOneRef>(null);
+  const regForm = useRef<AccountAndPswRef>(null);
 
   const [{ msg: formActionState }, formAction] = useFormState(handleRegister, {
     msg: FormActionState.INIT,
@@ -121,7 +120,9 @@ export default function Register() {
           <h2 className="text-3xl font-bold">注册Prompt Flow</h2>
           <p className="text-sm">
             <span>已有账号？</span>
-            <span className="text-sky-400">立即登录</span>
+            <Link className="text-sky-400" href="/login">
+              立即注册
+            </Link>
           </p>
         </header>
 

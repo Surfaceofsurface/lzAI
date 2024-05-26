@@ -7,7 +7,7 @@ export default function SubmitButton({
   onClick,
   children,
 }: {
-  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
 }) {
   const { pending } = useFormStatus();

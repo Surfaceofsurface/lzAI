@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 
-export default forwardRef(function StepTwo(
+export default forwardRef(function VrfCode(
   { account }: { account: string },
   ref
 ) {
