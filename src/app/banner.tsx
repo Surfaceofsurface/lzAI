@@ -1,12 +1,15 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-export default function Banner({
-  login,
-  avatar,
-}: {
-  login: boolean;
-  avatar: string;
-}) {
+import { useLocalStorage } from "@reactuses/core";
+export default function Banner() {
+  const [login, _] = useLocalStorage("login", false);
+  const [userInfo, __] = useLocalStorage<UserLoginRes>("info", null, {
+    serializer: {
+      read: JSON.parse,
+      write: JSON.stringify,
+    },
+  });
   return (
     <header className="flex justify-between bg-black h-6 p-10 pt-8 pb-8">
       <div className="flex flex-col justify-center text-sm md:text-base">
@@ -25,7 +28,7 @@ export default function Banner({
             height={32}
             width={32}
             alt="头像"
-            src={avatar}
+            src={userInfo?.avatar || ""}
           ></Image>
         </span>
         <div className={`flex gap-2 ${login ? "hidden" : ""}`}>

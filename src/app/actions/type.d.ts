@@ -19,3 +19,4 @@ type LOGIN_WHEN_OK = {
   payload: UserLoginRes;
 };
 type LOGIN_RES = LOGIN_WHEN_ERR | LOGIN_WHEN_OK;
+type REGISTER_RES = { msg: 5; payload: UserLoginRes } | { msg: number };

@@ -7,12 +7,10 @@ const CODE_USR_E = 4;
 const REG_OK = 5;
 const REG_CODE_E = 6;
 const REG_UNKNOWN = 7;
-
 export async function handleRegister(
-  prevState: { msg: number },
+  prevState: REGISTER_RES,
   formData: FormData
 ) {
-  console.log(prevState.msg);
   if (prevState.msg === CODE_OK) {
     //注册
     const rawFormData = {
@@ -20,26 +18,27 @@ export async function handleRegister(
       password: formData.get("psw"),
       emailcode: formData.get("vrfCode"),
     };
-    return await fetch("http://121.196.237.175:61087/api/user/register", {
+    return (await fetch("http://121.196.237.175:61087/api/user/register", {
       method: "POST",
       body: JSON.stringify(rawFormData),
       headers: new Headers({ "Content-Type": "application/json" }),
     })
       .then(async (res) => {
-        if (res.status === 201) return { msg: REG_OK };
+        if (res.status === 201)
+          return { msg: REG_OK, payload: await res.json() };
         throw await res.text();
       })
       .catch((e: string | Error) => {
         if (e === "code error") return { msg: REG_CODE_E };
         return { msg: REG_UNKNOWN };
-      });
+      })) as REGISTER_RES;
   } else {
     //发送验证码
 
     const rawFormData = {
       account: formData.get("account"),
     };
-    return await fetch("http://121.196.237.175:61087/api/user/sendcode", {
+    return (await fetch("http://121.196.237.175:61087/api/user/sendcode", {
       method: "POST",
       body: JSON.stringify(rawFormData),
       headers: new Headers({ "Content-Type": "application/json" }),
@@ -52,6 +51,6 @@ export async function handleRegister(
       .catch((e: string | Error) => {
         if (e === "user exist") return { msg: CODE_USR_E };
         return { msg: CODE_UNKNOWN };
-      });
+      })) as REGISTER_RES;
   }
 }

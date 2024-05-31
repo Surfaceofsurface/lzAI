@@ -7,17 +7,10 @@ import AICollege from "@/app/aiCollege";
 import { FaAnglesDown } from "react-icons/fa6";
 import Arc from "@/assets/arc.svg";
 import { useState, useRef } from "react";
-import { useLocalStorage } from "@reactuses/core";
 
 export default function Home() {
   const [homeIndex, setHomeIndex] = useState(1);
-  const [login, _] = useLocalStorage("login", false);
-  const [userInfo, __] = useLocalStorage<UserLoginRes>("info", null, {
-    serializer: {
-      read: JSON.parse,
-      write: JSON.stringify,
-    },
-  });
+
   const homeBgImgURLs = useRef([
     "/prompt3.png",
     "/homeAstro.png",
@@ -29,10 +22,7 @@ export default function Home() {
         className="bg-[url('/homeAstro.png')] h-screen bg-cover flex flex-col"
         style={{ backgroundImage: `url(${homeBgImgURLs.current[homeIndex]})` }}
       >
-        <Banner
-          login={login === null ? false : login}
-          avatar={userInfo?.avatar || "/"}
-        ></Banner>
+        <Banner></Banner>
         <Nav highlightIndex={0}></Nav>
 
         <hgroup className="flex-1 ml-14 mr-14 overflow-hidden">

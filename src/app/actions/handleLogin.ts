@@ -27,7 +27,6 @@ export async function handleLogin(prevState: LOGIN_RES, formData: FormData) {
       return { ok: true, payload: body } as LOGIN_WHEN_OK;
     })
     .catch((e: string) => {
-      console.log(e);
       if (e === "password error") return { ok: false, cause: LOGIN_E_PSW };
       else if (e === "no user") return { ok: false, cause: LOGIN_NO_USR };
       else return { ok: false, cause: LOGIN_E_NET };

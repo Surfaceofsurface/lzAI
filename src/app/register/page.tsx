@@ -10,12 +10,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { useLocalStorage } from "@reactuses/core";
 import StepOne from "@/components/form/accountAndPsw";
 import StepTwo from "@/components/form/vrfCode";
 import { handleRegister } from "@/app/actions/handleRegister";
 import SubmitButton from "@/components/form/submitBtn";
 import { useFormState } from "react-dom";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 const pswRegex = /^.+$/;
 const codeRegex = /^\d{6}$/;
@@ -40,12 +41,20 @@ export default function Register() {
   3.注册功能
    */
   const [formMsg, setFormMsg] = useState("");
-  const router = useRouter();
   const regForm = useRef<AccountAndPswRef>(null);
   const codeForm = useRef<VrfCodeRef>(null);
-  const [{ msg: formActionState }, formAction] = useFormState(handleRegister, {
+  const [_, setLocalLogin] = useLocalStorage("login", false);
+  const [__, setUserInfo] = useLocalStorage<UserLoginRes>("info", null, {
+    serializer: {
+      read: JSON.parse,
+      write: JSON.stringify,
+    },
+  });
+  const [formRes, formAction] = useFormState(handleRegister, {
     msg: FormActionState.INIT,
   });
+
+  const formActionState = formRes.msg;
   const step = [
     FormActionState.CODE_UNKNOWN,
     FormActionState.CODE_USR_E,
@@ -67,8 +76,10 @@ export default function Register() {
     } else if (formActionState === FormActionState.REG_UNKNOWN) {
       setFormMsg("无法连接到服务器，请稍后再试");
     } else if (formActionState === FormActionState.REG_OK) {
-      console.log(13);
-      router.replace("/");
+      const okPayload = (formRes as { msg: 5; payload: UserLoginRes }).payload;
+      setLocalLogin(true);
+      setUserInfo(okPayload);
+      redirect("/");
     }
   }, [formActionState]);
   function handleAccountInput(
