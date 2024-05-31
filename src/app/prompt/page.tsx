@@ -1,7 +1,7 @@
 "use client";
 import WaterFall from "@/components/waterfall";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useNavIndex from "../nav/useNavIndex";
 import Loading from "@/assets/loading.svg";
 const navAsideData = [
@@ -28,22 +28,22 @@ export default function Page() {
   };
   //有问题！！！
   const [asideIndex, setAsideIndex] = useNavIndex(() => [], observerOption);
-  const imgSrcs = [
-    "/coca.png",
-    "/friday.png",
-    "/fotor.png",
-    "/aivesa.png",
-    "/next.svg",
-    "/hayo.png",
-    "/logo.svg",
-    "/artwoman.png",
-    "/vilain.png",
-    "/elephant.png",
-    "/bears.png",
-    "/warf.png",
-    "/paint.png",
-    "/soldier.png",
-  ];
+  const [imgSrcs, setImageSrcs] = useState<PromptInfo[]>([]);
+  useEffect(() => {
+    fetch("http://121.196.237.175:61087/api/creator/search?input&page", {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    })
+      .then((res) => res.json())
+      .then((data: PromptListFromApi) => {
+        setImageSrcs(
+          data.map(({ id, url }) => {
+            return { id, src: url };
+          })
+        );
+      });
+  }, []);
   return (
     <>
       <main className="flex flex-1" ref={rootRef}>

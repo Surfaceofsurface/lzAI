@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: "file.plumend.cn",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "pic.imgdb.cn",
+        pathname: "/**",
+      },
     ],
   },
   webpack(config) {

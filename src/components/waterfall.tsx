@@ -14,13 +14,13 @@ type ImageHeight = number;
 type ImageSize = [ImageWidth, ImageHeight];
 type Position = [LeftOffset, TopOffset];
 
-export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
+export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
   const [positions, setPositions] = useState<[number, number][]>(
     new Array(imgSrcs.length).fill([0, 0])
   );
   const [colW, setColW] = useState(1);
   const [maxH, setMaxH] = useState(0); //最大高度
-  const [selectedId, setSelectedId] = useState("");
+  const [selectedId, setSelectedId] = useState(-1);
   const cols = useRef<ColContainer[] | null>(null);
   const getMinHeightCol = useRef(() => {
     return cols.current!.reduce((hMinCol, curCol) =>
@@ -49,35 +49,6 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
       .fill(0)
       .map((_, i) => new ColContainer(i, colWidth, gap));
   });
-  // const bottomElRef = useRef<HTMLDivElement>(null);
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       if (entries[0].isIntersecting) {
-  //         const newImgD = [
-  //           "/coca.png",
-  //           "/friday.png",
-  //           "/fotor.png",
-  //           "/aivesa.png",
-  //           "/bears.png",
-  //           "/next.svg",
-  //           "/paint.png",
-  //           "/hayo.png",
-  //           "/logo.svg",
-  //         ];
-  //         setPositions((positions) => {
-  //           return [
-  //             ...positions,
-  //             ...new Array(newImgD.length).fill([110, 110]),
-  //           ];
-  //         });
-  //       }
-  //     },
-  //     { threshold: 1 }
-  //   );
-  //   observer.observe(bottomElRef.current!);
-  //   return () => observer.disconnect();
-  // }, []);
 
   class ColContainer {
     n: number;
@@ -112,23 +83,23 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
 
   return (
     <main className="relative" ref={rootRefCall.current}>
-      {imgSrcs.map((src, i) => (
+      {imgSrcs.map(({ src, id }, i) => (
         <motion.div
           layout
-          key={i}
+          key={id}
           className={`flex overflow-hidden ${
-            selectedId === src
+            selectedId === id
               ? "fixed z-20 m-auto bg-neutral-900"
               : "absolute z-0"
           }`}
-          onClick={() => setSelectedId(src)}
+          onClick={() => setSelectedId(id)}
           style={{
-            left: `${selectedId === src ? 0 : positions[i][0] + "px"}`,
-            top: `${selectedId === src ? 0 : positions[i][1] + "px"}`,
-            width: `${selectedId === src ? "80vw" : colW + "px"}`,
-            height: `${selectedId === src ? "80vh" : "auto"}`,
-            marginLeft: `${selectedId === src ? "10vw" : ""}`,
-            marginTop: `${selectedId === src ? "10vh" : ""}`,
+            left: `${selectedId === id ? 0 : positions[i][0] + "px"}`,
+            top: `${selectedId === id ? 0 : positions[i][1] + "px"}`,
+            width: `${selectedId === id ? "80vw" : colW + "px"}`,
+            height: `${selectedId === id ? "80vh" : "auto"}`,
+            marginLeft: `${selectedId === id ? "10vw" : ""}`,
+            marginTop: `${selectedId === id ? "10vh" : ""}`,
           }}
         >
           <motion.div layout className="flex-shrink-0">
@@ -154,7 +125,7 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
 
           <main
             className={`flex-col ${
-              selectedId === src ? "flex basis-0 " : "hidden"
+              selectedId === id ? "flex basis-0 " : "hidden"
             } flex-shrink-0 grow-[1]`}
           >
             <header className="flex flex-col border-b gap-1 p-4 pb-1">
@@ -162,7 +133,7 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
                 className="ml-auto hover:bg-red-700 rounded-md"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSelectedId("");
+                  setSelectedId(-1);
                 }}
               >
                 <IoClose />
@@ -256,10 +227,10 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: string[] }) {
         </motion.div>
       ))}
       <div>
-        {selectedId && (
+        {selectedId >= 0 && (
           <div
             className="fixed left-0 top-0 w-full h-full z-10"
-            onClick={() => setSelectedId("")}
+            onClick={() => setSelectedId(-1)}
           ></div>
         )}
       </div>
