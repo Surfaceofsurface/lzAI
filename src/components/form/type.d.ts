@@ -2,7 +2,10 @@ interface AccountAndPswRef {
   getAccount(): string;
   getPsw(): string;
 }
-
+interface VrfCodeRef {
+  getCode(): string;
+  getAgree(): boolean;
+}
 interface AccountAndPswProps {
   setFormMsg: Dispatch<SetStateAction<string>>;
   display: boolean;

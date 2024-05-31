@@ -15,7 +15,7 @@ import StepTwo from "@/components/form/vrfCode";
 import { handleRegister } from "@/app/actions/handleRegister";
 import SubmitButton from "@/components/form/submitBtn";
 import { useFormState } from "react-dom";
-
+import { useRouter } from "next/navigation";
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 const pswRegex = /^.+$/;
 const codeRegex = /^\d{6}$/;
@@ -28,7 +28,10 @@ enum FormActionState {
   INIT = 1,
   CODE_OK,
   CODE_UNKNOWN,
+  CODE_USR_E,
   REG_OK,
+  REG_CODE_E,
+  REG_UNKNOWN,
 }
 export default function Register() {
   /*TODO: 
@@ -37,17 +40,35 @@ export default function Register() {
   3.注册功能
    */
   const [formMsg, setFormMsg] = useState("");
+  const router = useRouter();
   const regForm = useRef<AccountAndPswRef>(null);
-
+  const codeForm = useRef<VrfCodeRef>(null);
   const [{ msg: formActionState }, formAction] = useFormState(handleRegister, {
     msg: FormActionState.INIT,
   });
+  const step = [
+    FormActionState.CODE_UNKNOWN,
+    FormActionState.CODE_USR_E,
+    FormActionState.INIT,
+  ].includes(formActionState)
+    ? 1
+    : formActionState === FormActionState.REG_OK
+    ? 3
+    : 2;
   useEffect(() => {
     if (formActionState === FormActionState.CODE_UNKNOWN) {
       setFormMsg("无法连接到服务器，请稍后再试");
-    }
-    if (formActionState === FormActionState.CODE_OK) {
+    } else if (formActionState === FormActionState.CODE_USR_E) {
+      setFormMsg("该用户已经注册过了");
+    } else if (formActionState === FormActionState.CODE_OK) {
       setFormMsg("");
+    } else if (formActionState === FormActionState.REG_CODE_E) {
+      setFormMsg("验证码错误");
+    } else if (formActionState === FormActionState.REG_UNKNOWN) {
+      setFormMsg("无法连接到服务器，请稍后再试");
+    } else if (formActionState === FormActionState.REG_OK) {
+      console.log(13);
+      router.replace("/");
     }
   }, [formActionState]);
   function handleAccountInput(
@@ -82,33 +103,47 @@ export default function Register() {
       if (
         !(
           regForm.current &&
+          codeForm.current &&
           regForm.current.getAccount() &&
-          regForm.current.getPsw()
+          regForm.current.getPsw() &&
+          codeForm.current.getCode() !== void 0 &&
+          codeForm.current.getAgree() !== void 0
         )
       ) {
         return setFormMsg("发生了意料之外的错误，请刷新页面");
+      }
+      if (!codeRegex.test(codeForm.current.getCode())) {
+        e.preventDefault();
+        return setFormMsg("请输入6位验证码");
+      }
+      if (!codeForm.current.getAgree()) {
+        e.preventDefault();
+        return setFormMsg("同意服务条款后即可注册");
       }
       //默认会使用html的原生表单功能发送数据
       return;
     } else {
       //发送验证码
-      if (!regForm.current) {
+      if (
+        !(
+          regForm.current &&
+          regForm.current.getAccount() !== void 0 &&
+          regForm.current.getAccount() !== void 0 &&
+          regForm.current.getPsw() !== void 0
+        )
+      ) {
+        e.preventDefault();
         return setFormMsg("错误：页面中找不到邮箱输入框，请刷新页面");
       }
       const account = regForm.current.getAccount();
       const psw = regForm.current.getPsw();
 
-      if (!regForm.current.getAccount()) {
-        return setFormMsg("错误：页面中找不到账号输入框，请刷新页面");
-      }
-      if (!regForm.current.getPsw()) {
-        return setFormMsg("错误：页面中找不到密码输入框，请刷新页面");
-      }
-
       if (!emailRegex.test(account)) {
+        e.preventDefault();
         return setFormMsg("请输入格式正确的邮箱");
       }
       if (!pswRegex.test(psw)) {
+        e.preventDefault();
         return setFormMsg("密码不能为空");
       }
     }
@@ -121,7 +156,7 @@ export default function Register() {
           <p className="text-sm">
             <span>已有账号？</span>
             <Link className="text-sky-400" href="/login">
-              立即注册
+              立即登录
             </Link>
           </p>
         </header>
@@ -132,22 +167,19 @@ export default function Register() {
               setFormMsg={setFormMsg}
               onPswInput={handlePswInput}
               onAccountInput={handleAccountInput}
-              display={
-                formActionState !== FormActionState.CODE_OK &&
-                formActionState !== FormActionState.REG_OK
-              }
+              display={step === 1}
               ref={regForm}
             />
           }
-          {formActionState === FormActionState.CODE_OK && (
-            <StepTwo account={regForm.current!.getAccount()} />
+          {step === 2 && (
+            <StepTwo account={regForm.current!.getAccount()} ref={codeForm} />
           )}
           <div className="text-xs text-red-500">{formMsg}</div>
           <SubmitButton onClick={handleSubmitClick}>
             {formActionState !== FormActionState.CODE_OK &&
             formActionState !== FormActionState.REG_OK
               ? "获取验证码"
-              : "注册"}
+              : "注册并登录"}
           </SubmitButton>
         </form>
 

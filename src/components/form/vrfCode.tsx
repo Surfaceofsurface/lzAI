@@ -37,7 +37,7 @@ export default forwardRef(function VrfCode(
         return vrfCodeForm.current!.value;
       },
       getAgree() {
-        return agreeCheckbox.current!.value;
+        return agreeCheckbox.current!.checked;
       },
     };
   });

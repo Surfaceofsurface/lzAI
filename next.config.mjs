@@ -2,6 +2,13 @@
 const nextConfig = {
   images: {
     disableStaticImages: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "file.plumend.cn",
+        pathname: "/**",
+      },
+    ],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
