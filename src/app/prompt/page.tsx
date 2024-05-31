@@ -3,6 +3,7 @@ import WaterFall from "@/components/waterfall";
 import Link from "next/link";
 import { useRef } from "react";
 import useNavIndex from "../nav/useNavIndex";
+import Loading from "@/assets/loading.svg";
 const navAsideData = [
   {
     title: "精选",
@@ -61,7 +62,11 @@ export default function Page() {
           </ul>
         </aside>
         <main className="relative basis-0 grow-[9]">
-          <WaterFall imgSrcs={imgSrcs}></WaterFall>
+          {imgSrcs.length > 0 ? (
+            <WaterFall imgSrcs={imgSrcs}></WaterFall>
+          ) : (
+            <Loading className="inline h-5 w-5 animate-spin text-white"></Loading>
+          )}
         </main>
       </main>
     </>
