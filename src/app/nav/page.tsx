@@ -5,7 +5,7 @@ import WeChatSVG from "@/assets/wechat.svg";
 import AICard from "@/components/aicard";
 import Link from "next/link";
 import { useRef, useEffect } from "react";
-import useNavIndex from "./useNavIndex";
+import useNavIndex from "../../utils/useNavIndex";
 
 import { navCardsData } from "./pageData";
 

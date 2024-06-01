@@ -14,6 +14,18 @@ type ImageHeight = number;
 type ImageSize = [ImageWidth, ImageHeight];
 type Position = [LeftOffset, TopOffset];
 
+const openSpring = {
+  type: "spring",
+  stiffness: 200,
+  damping: 30,
+  duration: 0.5,
+};
+const closeSpring = {
+  type: "spring",
+  stiffness: 300,
+  damping: 35,
+  duration: 0.5,
+};
 export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
   const [positions, setPositions] = useState<[number, number][]>(
     new Array(imgSrcs.length).fill([0, 0])
@@ -86,11 +98,10 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
       {imgSrcs.map(({ src, id }, i) => (
         <motion.div
           layout
+          transition={selectedId === id ? openSpring : closeSpring}
           key={id}
-          className={`flex overflow-hidden ${
-            selectedId === id
-              ? "fixed z-20 m-auto bg-neutral-900"
-              : "absolute z-0"
+          className={`flex overflow-hidden transition-[width] duration-300 bg-neutral-900 ${
+            selectedId === id ? "fixed z-20 m-auto " : "absolute z-0"
           }`}
           onClick={() => setSelectedId(id)}
           style={{
@@ -103,29 +114,31 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
           }}
         >
           <motion.div layout className="flex-shrink-0">
-            <Image
-              style={{
-                width: `${colW}px`,
-                height: "auto",
-              }}
-              height={999}
-              width={999} // 不能改width和height，否则会导致onload触发两次
-              src={src}
-              alt="1"
-              onLoad={(e) => {
-                //find min col to insert
-                const shouldInsertCol = getMinHeightCol.current();
-                shouldInsertCol.add(
-                  [e.currentTarget.width, e.currentTarget.height],
-                  i
-                );
-              }}
-            ></Image>
+            <motion.span layout="position">
+              <Image
+                style={{
+                  width: `${colW}px`,
+                  height: "auto",
+                }}
+                height={999}
+                width={999} // 不能改width和height，否则会导致onload触发两次
+                src={src}
+                alt="1"
+                onLoad={(e) => {
+                  //find min col to insert
+                  const shouldInsertCol = getMinHeightCol.current();
+                  shouldInsertCol.add(
+                    [e.currentTarget.width, e.currentTarget.height],
+                    i
+                  );
+                }}
+              ></Image>
+            </motion.span>
           </motion.div>
 
           <main
             className={`flex-col ${
-              selectedId === id ? "flex basis-0 " : "hidden"
+              selectedId === id ? "flex basis-0 " : ""
             } flex-shrink-0 grow-[1]`}
           >
             <header className="flex flex-col border-b gap-1 p-4 pb-1">
