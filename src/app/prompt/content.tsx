@@ -18,7 +18,7 @@ const navAsideData = [
     href: "#weekly",
   },
 ];
-export default function Main({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
+export default function Main({ imgSrcs }: { imgSrcs: WaterFallImgs[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const observerOption = {
     root: rootRef.current,

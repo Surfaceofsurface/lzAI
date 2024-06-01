@@ -1,0 +1,1 @@
+type WaterFallImgs = { id: number; src: string };

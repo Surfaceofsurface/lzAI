@@ -12,7 +12,7 @@ type TopOffset = number;
 type ImageWidth = number;
 type ImageHeight = number;
 type ImageSize = [ImageWidth, ImageHeight];
-type Position = [LeftOffset, TopOffset];
+type Position = [LeftOffset, TopOffset, ImageWidth, ImageHeight];
 
 const openSpring = {
   type: "spring",
@@ -26,11 +26,11 @@ const closeSpring = {
   damping: 35,
   duration: 0.5,
 };
-export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
-  const [positions, setPositions] = useState<[number, number][]>(
-    new Array(imgSrcs.length).fill([0, 0])
+export default function WaterFall({ imgSrcs }: { imgSrcs: WaterFallImgs[] }) {
+  const [positions, setPositions] = useState<Position[]>(
+    new Array(imgSrcs.length).fill([0, 0, 0, 0])
   );
-  const [colW, setColW] = useState(1);
+  const [colW, setColW] = useState(0);
   const [maxH, setMaxH] = useState(0); //最大高度
   const [selectedId, setSelectedId] = useState(-1);
   const cols = useRef<ColContainer[] | null>(null);
@@ -84,10 +84,10 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
         this.h -= h / w;
       }
       this.h += height / width;
-      this.els.set(i, [leftOffset, topOffset]);
+      this.els.set(i, [leftOffset, topOffset, width, height]);
       setMaxH((maxH) => Math.max(maxH, topOffset + height));
       setPositions((positions) => {
-        positions[i] = [leftOffset, topOffset];
+        positions[i] = [leftOffset, topOffset, width, height];
         return [...positions];
       });
     }
@@ -100,7 +100,7 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
           layout
           transition={selectedId === id ? openSpring : closeSpring}
           key={id}
-          className={`flex overflow-hidden transition-[width] duration-300 bg-neutral-900 ${
+          className={`flex overflow-hidden transition-[width,height] duration-300 bg-neutral-900 ${
             selectedId === id ? "fixed z-20 m-auto " : "absolute z-0"
           }`}
           onClick={() => setSelectedId(id)}
@@ -108,7 +108,11 @@ export default function WaterFall({ imgSrcs }: { imgSrcs: PromptInfo[] }) {
             left: `${selectedId === id ? 0 : positions[i][0] + "px"}`,
             top: `${selectedId === id ? 0 : positions[i][1] + "px"}`,
             width: `${selectedId === id ? "80vw" : colW + "px"}`,
-            height: `${selectedId === id ? "80vh" : "auto"}`,
+            height: `${
+              selectedId === id
+                ? "80vh"
+                : (colW / positions[i][2]) * positions[i][3]+"px"
+            }`,
             marginLeft: `${selectedId === id ? "10vw" : ""}`,
             marginTop: `${selectedId === id ? "10vh" : ""}`,
           }}
