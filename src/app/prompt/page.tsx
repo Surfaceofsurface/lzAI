@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import PromptContent from "./content";
 export default async function ServerWaterFall() {
   const dataFromApi: PromptListFromApi = await fetch(
@@ -13,9 +12,7 @@ export default async function ServerWaterFall() {
   return (
     <>
       <main className="flex flex-1">
-        <Suspense fallback={"12345"}>
-          <PromptContent imgSrcs={imgs}></PromptContent>
-        </Suspense>
+        <PromptContent imgSrcs={imgs}></PromptContent>
       </main>
     </>
   );

@@ -7,7 +7,7 @@ export default function NavLayout({
 }>) {
   return (
     <div>
-      <div className="flex flex-col bg-[url('/navWoman.png')] h-screen bg-cover bg-center">
+      <div className="flex flex-col bg-[url('/navWoman.png')] h-screen bg-cover bg-center overflow-x-hidden">
         <Banner></Banner>
         <Nav highlightIndex={2}></Nav>
         {children}
